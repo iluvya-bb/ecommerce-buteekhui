@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-	baseURL: "http://localhost:8002", // The ecommerce-backend URL
+	baseURL: import.meta.env.VITE_API_URL, // The ecommerce-backend URL
 	headers: {
 		"Content-Type": "application/json",
 	},
