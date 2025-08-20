@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import ProductCard from './ProductCard';
+import React, { useState } from "react";
+import ProductCard from "./ProductCard";
 
 const FilteredProductGrid = ({ products }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -7,7 +7,10 @@ const FilteredProductGrid = ({ products }) => {
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct,
+  );
 
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(products.length / productsPerPage); i++) {
@@ -26,7 +29,8 @@ const FilteredProductGrid = ({ products }) => {
           <button
             key={number}
             onClick={() => setCurrentPage(number)}
-            className={`px-4 py-2 mx-1 rounded-lg ${currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
+            className={`px-4 py-2 mx-1 rounded-lg ${currentPage === number ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+          >
             {number}
           </button>
         ))}

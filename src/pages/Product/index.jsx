@@ -42,6 +42,14 @@ const ProductPage = () => {
     }
   };
 
+  const handleAddToCart = () => {
+    const productWithImageUrl = {
+      ...product,
+      image: selectedImage,
+    };
+    addToCart(productWithImageUrl, quantity);
+  };
+
   if (loading) {
     return <div className="text-center py-12">Ачааллаж байна...</div>;
   }
@@ -86,7 +94,7 @@ const ProductPage = () => {
               <input type="number" value={quantity} onChange={handleQuantityChange} className="w-16 text-center mx-2 border rounded" />
               <button onClick={() => setQuantity(quantity + 1)} className="bg-gray-200 px-4 py-2 rounded-lg">+</button>
             </div>
-            <button onClick={() => addToCart(product, quantity)} className="bg-blue-500 text-white px-6 py-3 rounded-lg">Сагсанд хийх</button>
+            <button onClick={handleAddToCart} className="bg-blue-500 text-white px-6 py-3 rounded-lg">Сагсанд хийх</button>
           </div>
         </div>
       </div>
