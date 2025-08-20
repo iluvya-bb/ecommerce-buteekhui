@@ -20,9 +20,9 @@ const ProductPage = () => {
         const response = await API.getProduct(id);
         setProduct(response.data.data);
         if (response.data.data.featuredImage) {
-          setSelectedImage(`http://localhost:8002/${response.data.data.featuredImage}`);
+          setSelectedImage(`${import.meta.env.VITE_API_URL}/${response.data.data.featuredImage}`);
         } else if (response.data.data.images && response.data.data.images.length > 0) {
-          setSelectedImage(`http://localhost:8002/${response.data.data.images[0].url}`);
+          setSelectedImage(`${import.meta.env.VITE_API_URL}/${response.data.data.images[0].url}`);
         }
       } catch (err) {
         setError("Бүтээгдэхүүн татахад алдаа гарлаа.");
@@ -67,10 +67,10 @@ const ProductPage = () => {
               {product.images.map((image) => (
                 <img
                   key={image.id}
-                  src={`http://localhost:8002/${image.url}`}
+                  src={`${import.meta.env.VITE_API_URL}/${image.url}`}
                   alt={`${product.name} thumbnail`}
                   className={`w-24 h-24 object-cover rounded-lg cursor-pointer mr-2 ${selectedImage.endsWith(image.url) ? 'border-2 border-blue-500' : ''}`}
-                  onClick={() => setSelectedImage(`http://localhost:8002/${image.url}`)}
+                  onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/${image.url}`)}
                 />
               ))}
             </div>

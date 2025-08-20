@@ -44,7 +44,7 @@ const OrderDetail = () => {
           <div className="space-y-4">
             {order.products.map(product => (
               <div key={product.id} className="flex items-center">
-                <img src={product.featuredImage ? `http://localhost:8002/${product.featuredImage}` : 'https://via.placeholder.com/150'} alt={product.name} className="w-20 h-20 object-cover rounded-lg mr-4" />
+                <img src={product.featuredImage ? `${import.meta.env.VITE_API_URL}/${product.featuredImage}` : 'https://via.placeholder.com/150'} alt={product.name} className="w-20 h-20 object-cover rounded-lg mr-4" />
                 <div>
                   <h3 className="font-semibold">{product.name}</h3>
                   <p className="text-gray-500">Тоо ширхэг: {product.OrderItem.quantity}</p>

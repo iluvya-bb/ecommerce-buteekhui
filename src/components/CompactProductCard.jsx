@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const CompactProductCard = ({ product }) => {
-  const imageUrl = product.featuredImage ? `http://localhost:8002/${product.featuredImage}` : (product.images && product.images[0] ? `http://localhost:8002/${product.images[0].url}` : 'https://via.placeholder.com/150');
+  const imageUrl = product.featuredImage ? `${import.meta.env.VITE_API_URL}/${product.featuredImage}` : (product.images && product.images[0] ? `${import.meta.env.VITE_API_URL}/${product.images[0].url}` : 'https://via.placeholder.com/150');
   const categoryText = product.categories ? product.categories.map(c => c.name).join(', ') : '';
 
   return (
