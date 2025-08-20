@@ -32,7 +32,7 @@ export default function Layout() {
       try {
         const response = await API.getSettings();
         if (response.data.data.logo) {
-          setLogo(`http://localhost:8002/${response.data.data.logo}`);
+          setLogo(`${import.meta.env.VITE_API_URL}/${response.data.data.logo}`);
         }
       } catch (err) {
         console.error("Failed to load settings", err);
@@ -66,7 +66,11 @@ export default function Layout() {
                 className="flex items-center space-x-2 text-2xl font-bold text-orange-600"
                 whileHover={{ scale: 1.05 }}
               >
-                {logo ? <img src={logo} alt="Buteekhui.com" className="h-10" /> : <Armchair size={28} />}
+                {logo ? (
+                  <img src={logo} alt="Buteekhui.com" className="h-10" />
+                ) : (
+                  <Armchair size={28} />
+                )}
                 <span>Buteekhui.com</span>
               </motion.a>
 
@@ -92,14 +96,23 @@ export default function Layout() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-48 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                   />
-                  <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-orange-600">
+                  <button
+                    type="submit"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-orange-600"
+                  >
                     <Search size={22} />
                   </button>
                 </form>
-                <Link to={user ? "/profile" : "/login"} className="text-gray-500 hover:text-orange-600">
+                <Link
+                  to={user ? "/profile" : "/login"}
+                  className="text-gray-500 hover:text-orange-600"
+                >
                   <User size={22} />
                 </Link>
-                <button onClick={() => setIsCartOpen(true)} className="relative text-gray-500 hover:text-orange-600">
+                <button
+                  onClick={() => setIsCartOpen(true)}
+                  className="relative text-gray-500 hover:text-orange-600"
+                >
                   <ShoppingCart size={22} />
                   <CartItemsCount />
                 </button>
@@ -159,17 +172,26 @@ export default function Layout() {
                 <h3 className="text-lg font-bold mb-4">Нэмэлт холбоос</h3>
                 <ul className="space-y-2">
                   <li>
-                    <Link to="/about" className="text-gray-400 hover:text-white">
+                    <Link
+                      to="/about"
+                      className="text-gray-400 hover:text-white"
+                    >
                       Бидний тухай
                     </Link>
                   </li>
                   <li>
-                    <Link to="/privacy" className="text-gray-400 hover:text-white">
+                    <Link
+                      to="/privacy"
+                      className="text-gray-400 hover:text-white"
+                    >
                       Нууцлалын бодлого
                     </Link>
                   </li>
                   <li>
-                    <Link to="/terms" className="text-gray-400 hover:text-white">
+                    <Link
+                      to="/terms"
+                      className="text-gray-400 hover:text-white"
+                    >
                       Үйлчилгээний нөхцөл
                     </Link>
                   </li>
@@ -179,17 +201,26 @@ export default function Layout() {
                 <h3 className="text-lg font-bold mb-4">Ангилал</h3>
                 <ul className="space-y-2">
                   <li>
-                    <Link to="/categories/desks" className="text-gray-400 hover:text-white">
+                    <Link
+                      to="/categories/desks"
+                      className="text-gray-400 hover:text-white"
+                    >
                       Ширээ, сандал
                     </Link>
                   </li>
                   <li>
-                    <Link to="/categories/library" className="text-gray-400 hover:text-white">
+                    <Link
+                      to="/categories/library"
+                      className="text-gray-400 hover:text-white"
+                    >
                       Номын сан
                     </Link>
                   </li>
                   <li>
-                    <Link to="/categories/classroom" className="text-gray-400 hover:text-white">
+                    <Link
+                      to="/categories/classroom"
+                      className="text-gray-400 hover:text-white"
+                    >
                       Анги танхим
                     </Link>
                   </li>
@@ -205,8 +236,8 @@ export default function Layout() {
             </div>
             <div className="mt-12 border-t border-gray-700 pt-8 text-center text-gray-500">
               <p>
-                &copy; {new Date().getFullYear()} Buteekhui.com. Бүх эрх
-                хуулиар хамгаалагдсан.
+                &copy; {new Date().getFullYear()} Buteekhui.com. Бүх эрх хуулиар
+                хамгаалагдсан.
               </p>
             </div>
           </div>
