@@ -16,11 +16,7 @@ const ProductCard = ({ product }) => {
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const productWithImageUrl = {
-      ...product,
-      image: imageUrl,
-    };
-    addToCart(productWithImageUrl, 1);
+    addToCart(product, 1);
   };
 
   return (
@@ -35,7 +31,7 @@ const ProductCard = ({ product }) => {
           <h3 className="text-base font-semibold">{product.name}</h3>
           <p className="text-sm text-gray-500">{categoryText}</p>
           <div className="mt-2 flex justify-between items-center">
-            <p className="text-lg font-bold">${product.price}</p>
+            <p className="text-lg font-bold">₮{product.price}</p>
             <button
               onClick={handleAddToCart}
               className="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm"

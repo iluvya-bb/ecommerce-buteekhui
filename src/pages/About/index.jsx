@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Armchair,
@@ -166,58 +167,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Featured Products Section */}
-      <section id="featured" className="py-24 bg-gray-50">
-        <div className="max-w-[1800px] mx-auto px-6">
-          <motion.h2
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.5 }}
-            className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800"
-          >
-            Онцлох бүтээгдэхүүн
-          </motion.h2>
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            variants={staggerContainer}
-            viewport={{ once: true, amount: 0.2 }}
-            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8"
-          >
-            {featuredProducts.map((product) => (
-              <motion.div
-                variants={fadeInUp}
-                key={product.id}
-                className="bg-white border border-gray-200 rounded-2xl overflow-hidden group text-left transition-shadow duration-300 hover:shadow-xl"
-              >
-                <div className="overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">
-                    {product.name}
-                  </h3>
-                  <p className="text-xl font-extrabold text-orange-600 mb-4">
-                    {product.price}
-                  </p>
-                  <motion.button
-                    className="w-full bg-orange-100 text-orange-700 font-semibold p-3 rounded-lg hover:bg-orange-600 hover:text-white transition-colors duration-300"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    Сагсанд нэмэх
-                  </motion.button>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
       {/* Benefits Section */}
       <section id="about" className="py-24">
         <div className="max-w-[1800px] mx-auto px-6">
@@ -296,13 +245,15 @@ export default function About() {
             whileInView="animate"
             viewport={{ once: true, amount: 0.5 }}
           >
-            <motion.a
-              href="#"
-              className="inline-block bg-orange-600 text-white font-bold px-8 py-4 rounded-lg hover:bg-orange-700 shadow-lg shadow-orange-500/30 transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-            >
-              Холбоо барих
-            </motion.a>
+            <Link to="/contact">
+              <motion.a
+                href=""
+                className="inline-block bg-orange-600 text-white font-bold px-8 py-4 rounded-lg hover:bg-orange-700 shadow-lg shadow-orange-500/30 transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+              >
+                Холбоо барих
+              </motion.a>
+            </Link>
           </motion.div>
         </div>
       </section>

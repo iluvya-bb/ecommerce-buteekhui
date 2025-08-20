@@ -31,46 +31,53 @@ const CartDrawer = ({ isOpen, onClose }) => {
 				{cartItems.length === 0 ? (
 					<p>Таны сагс хоосон байна.</p>
 				) : (
-					cartItems.map((item) => (
-						<div key={item.id} className="flex items-center mb-4">
-							<img
-								src={item.image}
-								alt={item.name}
-								className="w-20 h-20 object-cover rounded-lg mr-4"
-							/>
-							<div className="flex-grow">
-								<h3 className="font-semibold">{item.name}</h3>
-								<p className="text-gray-500">${item.price}</p>
-								<div className="flex items-center mt-2">
-									<button
-										onClick={() => updateQuantity(item.id, item.quantity - 1)}
-										className="bg-gray-200 px-2 rounded-lg"
-									>
-										-
-									</button>
-									<span className="mx-2">{item.quantity}</span>
-									<button
-										onClick={() => updateQuantity(item.id, item.quantity + 1)}
-										className="bg-gray-200 px-2 rounded-lg"
-									>
-										+
-									</button>
+					cartItems.map((item) => {
+						const imageUrl = item.featuredImage
+							? `${import.meta.env.VITE_API_URL}/${item.featuredImage}`
+							: item.images && item.images[0]
+								? `${import.meta.env.VITE_API_URL}/${item.images[0].url}`
+								: "https://via.placeholder.com/150";
+						return (
+							<div key={item.id} className="flex items-center mb-4">
+								<img
+									src={imageUrl}
+									alt={item.name}
+									className="w-20 h-20 object-cover rounded-lg mr-4"
+								/>
+								<div className="flex-grow">
+									<h3 className="font-semibold">{item.name}</h3>
+									<p className="text-gray-500">${item.price}</p>
+									<div className="flex items-center mt-2">
+										<button
+											onClick={() => updateQuantity(item.id, item.quantity - 1)}
+											className="bg-gray-200 px-2 rounded-lg"
+										>
+											-
+										</button>
+										<span className="mx-2">{item.quantity}</span>
+										<button
+											onClick={() => updateQuantity(item.id, item.quantity + 1)}
+											className="bg-gray-200 px-2 rounded-lg"
+										>
+											+
+										</button>
+									</div>
 								</div>
+								<button
+									onClick={() => removeFromCart(item.id)}
+									className="text-red-500"
+								>
+									<X size={20} />
+								</button>
 							</div>
-							<button
-								onClick={() => removeFromCart(item.id)}
-								className="text-red-500"
-							>
-								<X size={20} />
-							</button>
-						</div>
-					))
+						);
+					})
 				)}
 			</div>
 			<div className="absolute bottom-0 left-0 w-full p-4 border-t bg-white">
 				<div className="flex justify-between mb-2">
 					<span className="font-semibold">Нийт дүн:</span>
-					<span>${subtotal.toFixed(2)}</span>
+					<span>₮{subtotal.toFixed(2)}</span>
 				</div>
 				<button
 					onClick={handleCheckout}
