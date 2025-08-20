@@ -20,7 +20,9 @@ const CompactProductCard = ({ product }) => {
           className="w-full h-32 object-contain"
         />
         <div className="p-2">
-          <h3 className="text-sm font-semibold h-10">{product.name}</h3>
+          <h3 className="text-sm font-semibold h-10 truncate">
+            {product.name}
+          </h3>
           <p className="text-xs text-gray-500 h-6">{categoryText}</p>
           <div className="mt-1">
             <p className="text-sm font-bold">₮{product.price}</p>

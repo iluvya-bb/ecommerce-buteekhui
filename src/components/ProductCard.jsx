@@ -28,13 +28,15 @@ const ProductCard = ({ product }) => {
           className="w-full h-48 object-contain"
         />
         <div className="p-4">
-          <h3 className="text-base font-semibold">{product.name}</h3>
+          <h3 className="text-base font-semibold text-black">{product.name}</h3>
           <p className="text-sm text-gray-500">{categoryText}</p>
-          <div className="mt-2 flex justify-between items-center">
-            <p className="text-lg font-bold">₮{product.price}</p>
+          <div className="mt-2 flex justify-between items-center text-black">
+            <p className="text-lg font-bold" text-black>
+              ₮{product.price}
+            </p>
             <button
               onClick={handleAddToCart}
-              className="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm"
+              className="bg-blue-500 text- px-3 py-1 rounded-lg text-sm"
             >
               Сагсанд хийх
             </button>
