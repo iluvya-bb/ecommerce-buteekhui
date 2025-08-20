@@ -8,7 +8,7 @@ const CompactProductCard = ({ product }) => {
   return (
     <Link to={`/product/${product.id}`}>
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <img src={imageUrl} alt={product.name} className="w-full h-32 object-cover" />
+        <img src={imageUrl} alt={product.name} className="w-full h-32 object-contain" />
         <div className="p-2">
           <h3 className="text-sm font-semibold h-10">{product.name}</h3>
           <p className="text-xs text-gray-500 h-6">{categoryText}</p>

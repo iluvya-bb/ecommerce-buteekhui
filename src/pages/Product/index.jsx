@@ -69,7 +69,7 @@ const ProductPage = () => {
                   key={image.id}
                   src={`${import.meta.env.VITE_API_URL}/${image.url}`}
                   alt={`${product.name} thumbnail`}
-                  className={`w-24 h-24 object-cover rounded-lg cursor-pointer mr-2 ${selectedImage.endsWith(image.url) ? 'border-2 border-blue-500' : ''}`}
+                  className={`w-24 h-24 object-contain rounded-lg cursor-pointer mr-2 ${selectedImage.endsWith(image.url) ? 'border-2 border-blue-500' : ''}`}
                   onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/${image.url}`)}
                 />
               ))}
