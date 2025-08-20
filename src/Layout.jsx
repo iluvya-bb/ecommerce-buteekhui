@@ -17,29 +17,18 @@ import {
 import { CartProvider, CartContext } from "./context/CartContext";
 import CartDrawer from "./components/CartDrawer";
 import { AuthContext } from "./context/AuthContext";
+import { SettingsContext } from "./context/SettingsContext";
 import API from "./services/api";
 
 export default function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [logo, setLogo] = useState(null);
+  const { settings } = useContext(SettingsContext);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const response = await API.getSettings();
-        if (response.data.data.logo) {
-          setLogo(`${import.meta.env.VITE_API_URL}/${response.data.data.logo}`);
-        }
-      } catch (err) {
-        console.error("Failed to load settings", err);
-      }
-    };
-    fetchSettings();
-  }, []);
+  const logo = settings.logo ? `${import.meta.env.VITE_API_URL}/${settings.logo}` : null;
 
   const navLinks = [
     { to: "/products", text: "Бүтээгдэхүүн" },
@@ -229,8 +218,8 @@ export default function Layout() {
               <div>
                 <h3 className="text-lg font-bold mb-4">Холбоо барих</h3>
                 <ul className="space-y-2 text-gray-400">
-                  <li>Имэйл: contact@buteekhui.com</li>
-                  <li>Утас: 7712-3456</li>
+                  <li>Имэйл: {settings.contactEmail}</li>
+                  <li>Утас: {settings.contactPhoneNumber}</li>
                 </ul>
               </div>
             </div>

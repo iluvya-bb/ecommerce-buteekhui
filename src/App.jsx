@@ -23,6 +23,7 @@ import OrderSuccess from "./pages/OrderSuccess";
 import OrderDetail from "./pages/OrderDetail";
 import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
+import { SettingsProvider } from "./context/SettingsContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 // NOTE: Make sure you have framer-motion and lucide-react installed:
@@ -33,30 +34,32 @@ export default function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="products" element={<Products />} />
-            <Route path="product/:id" element={<ProductPage />} />
-            <Route path="categories" element={<Categories />} />
-            <Route path="featured" element={<Featured />} />
-            <Route path="about" element={<About />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="privacy" element={<Privacy />} />
-            <Route path="terms" element={<Terms />} />
-            <Route path="categories/desks" element={<Desks />} />
-            <Route path="categories/library" element={<Library />} />
-            <Route path="categories/classroom" element={<Classroom />} />
-            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/order-success" element={<OrderSuccess />} />
-            <Route path="/orders/:id" element={<ProtectedRoute><OrderDetail /></ProtectedRoute>} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
+        <SettingsProvider>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="products" element={<Products />} />
+              <Route path="product/:id" element={<ProductPage />} />
+              <Route path="categories" element={<Categories />} />
+              <Route path="featured" element={<Featured />} />
+              <Route path="about" element={<About />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="privacy" element={<Privacy />} />
+              <Route path="terms" element={<Terms />} />
+              <Route path="categories/desks" element={<Desks />} />
+              <Route path="categories/library" element={<Library />} />
+              <Route path="categories/classroom" element={<Classroom />} />
+              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/order-success" element={<OrderSuccess />} />
+              <Route path="/orders/:id" element={<ProtectedRoute><OrderDetail /></ProtectedRoute>} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </SettingsProvider>
       </CartProvider>
     </AuthProvider>
   );
