@@ -46,7 +46,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
 								/>
 								<div className="flex-grow">
 									<h3 className="font-semibold">{item.name}</h3>
-									<p className="text-gray-500">${item.price}</p>
+									<p className="text-gray-500">₮{item.price}</p>
 									<div className="flex items-center mt-2">
 										<button
 											onClick={() => updateQuantity(item.id, item.quantity - 1)}
