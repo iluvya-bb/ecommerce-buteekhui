@@ -1,5 +1,18 @@
 import React from 'react';
 
+const PageButton = ({ page, currentPage, onPageChange, children }) => (
+  <button
+    onClick={() => onPageChange(page)}
+    className={`px-3 py-1 mx-1 rounded-md ${
+      currentPage === page ? 'bg-indigo-600 text-white' : 'bg-gray-200'
+    }`}
+  >
+    {children || page}
+  </button>
+);
+
+const Ellipsis = () => <span className="px-3 py-1">...</span>;
+
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -14,73 +27,36 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   const renderPageNumbers = () => {
+    if (totalPages <= 1) {
+      return null;
+    }
+
+    const pages = new Set();
+    pages.add(1);
+    pages.add(totalPages);
+    pages.add(currentPage);
+    if (currentPage > 1) pages.add(currentPage - 1);
+    if (currentPage < totalPages) pages.add(currentPage + 1);
+
     if (totalPages <= 7) {
-      const pages = [];
       for (let i = 1; i <= totalPages; i++) {
-        pages.push(
-          <button
-            key={i}
-            onClick={() => onPageChange(i)}
-            className={`px-3 py-1 mx-1 rounded-md ${
-              currentPage === i ? 'bg-indigo-600 text-white' : 'bg-gray-200'
-            }`}
-          >
-            {i}
-          </button>
-        );
-      }
-      return pages;
-    }
-
-    const pageNumbers = [];
-    // First page
-    pageNumbers.push(
-      <button key={1} onClick={() => onPageChange(1)} className={`px-3 py-1 mx-1 rounded-md ${currentPage === 1 ? 'bg-indigo-600 text-white' : 'bg-gray-200'}`}>
-        1
-      </button>
-    );
-
-    if (currentPage > 3) {
-      pageNumbers.push(<span key="start-ellipsis" className="px-3 py-1">...</span>);
-    }
-
-    let middlePages = [];
-    if (currentPage <= 3) {
-      middlePages = [2, 3, 4];
-    } else if (currentPage >= totalPages - 2) {
-      middlePages = [totalPages - 3, totalPages - 2, totalPages - 1];
-    } else {
-      middlePages = [currentPage - 1, currentPage, currentPage + 1];
-    }
-
-    for (const p of middlePages) {
-      if (p > 1 && p < totalPages) {
-        pageNumbers.push(
-          <button
-            key={p}
-            onClick={() => onPageChange(p)}
-            className={`px-3 py-1 mx-1 rounded-md ${
-              currentPage === p ? 'bg-indigo-600 text-white' : 'bg-gray-200'
-            }`}
-          >
-            {p}
-          </button>
-        );
+        pages.add(i);
       }
     }
 
-    if (currentPage < totalPages - 2) {
-      pageNumbers.push(<span key="end-ellipsis" className="px-3 py-1">...</span>);
+    const pageNumbers = Array.from(pages).sort((a, b) => a - b);
+
+    const result = [];
+    let lastPage = 0;
+    for (const page of pageNumbers) {
+      if (lastPage !== 0 && page > lastPage + 1) {
+        result.push(<Ellipsis key={`ellipsis-${lastPage}`} />);
+      }
+      result.push(<PageButton key={page} page={page} currentPage={currentPage} onPageChange={onPageChange} />);
+      lastPage = page;
     }
 
-    // Last page
-    pageNumbers.push(
-      <button key={totalPages} onClick={() => onPageChange(totalPages)} className={`px-3 py-1 mx-1 rounded-md ${currentPage === totalPages ? 'bg-indigo-600 text-white' : 'bg-gray-200'}`}>
-        {totalPages}
-      </button>
-    );
-
-    return pageNumbers;
+    return result;
   };
 
   return (
