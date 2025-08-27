@@ -4,6 +4,7 @@ import API from '../../services/api';
 import Sidebar from '../../components/Sidebar';
 import FilteredProductGrid from '../../components/FilteredProductGrid';
 import CompactProductGrid from '../../components/CompactProductGrid';
+import Pagination from '../../components/Pagination';
 
 const Products = () => {
   const [allProducts, setAllProducts] = useState([]);
@@ -11,7 +12,9 @@ const Products = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [pagination, setPagination] = useState(null);
+  const currentPage = parseInt(searchParams.get('page') || '1', 10);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -28,7 +31,7 @@ const Products = () => {
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const productResponse = await API.getAllProducts();
+        const productResponse = await API.getAllProducts({ limit: 5 });
         setAllProducts(productResponse.data.data);
       } catch (err) {
         // This error is less critical, so we can just log it
@@ -42,7 +45,10 @@ const Products = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const params = {};
+        const params = {
+          page: currentPage,
+          limit: 12,
+        };
         const categoryId = searchParams.get('category');
         const searchQuery = searchParams.get('q');
         const maxPrice = searchParams.get('maxPrice');
@@ -59,6 +65,7 @@ const Products = () => {
 
         const productResponse = await API.getAllProducts(params);
         setFilteredProducts(productResponse.data.data);
+        setPagination(productResponse.data.pagination);
       } catch (err) {
         setError("Бүтээгдэхүүн татахад алдаа гарлаа.");
       } finally {
@@ -66,7 +73,13 @@ const Products = () => {
       }
     };
     fetchProducts();
-  }, [searchParams]);
+  }, [searchParams, currentPage]);
+
+  const handlePageChange = (page) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set('page', page);
+    setSearchParams(newSearchParams);
+  };
 
   if (loading) {
     return <div className="text-center py-12">Ачааллаж байна...</div>;
@@ -86,10 +99,17 @@ const Products = () => {
         <div className="px-8 py-4">
           <div className="border-t border-gray-300"></div>
           <div className="flex flex-col items-center pt-2">
-            <span className="text-gray-500 mt-2">{filteredProducts.length} бүтээгдэхүүн олдлоо</span>
+            <span className="text-gray-500 mt-2">{pagination?.total || 0} бүтээгдэхүүн олдлоо</span>
           </div>
         </div>
         <FilteredProductGrid products={filteredProducts} />
+        {pagination && pagination.pages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={pagination.pages}
+            onPageChange={handlePageChange}
+          />
+        )}
       </div>
     </div>
   );
