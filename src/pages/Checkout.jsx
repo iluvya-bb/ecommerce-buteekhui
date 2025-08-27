@@ -9,7 +9,7 @@ const Checkout = () => {
   const { cartItems, clearCart } = useContext(CartContext);
   const { user } = useContext(AuthContext);
   const { settings } = useContext(SettingsContext);
-  const [contact, setContact] = useState({ name: '', address: '', phone: '' });
+  const [contact, setContact] = useState({ name: '', email: '', address: '', phone: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('bank');
@@ -20,6 +20,7 @@ const Checkout = () => {
     if (user) {
       setContact({
         name: user.name || '',
+        email: user.email || '',
         address: '', // Address is not in the user model, so it remains empty
         phone: user.phone || '',
       });
@@ -84,6 +85,10 @@ const Checkout = () => {
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">Нэр</label>
               <input type="text" name="name" id="name" value={contact.name} onChange={handleContactChange} required className="w-full px-3 py-2 mt-1 border rounded-md"/>
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">И-мэйл</label>
+              <input type="email" name="email" id="email" value={contact.email} onChange={handleContactChange} required disabled={!!user} className="w-full px-3 py-2 mt-1 border rounded-md bg-gray-100 disabled:cursor-not-allowed"/>
             </div>
             <div>
               <label htmlFor="address" className="block text-sm font-medium text-gray-700">Хүргэлтийн хаяг</label>
