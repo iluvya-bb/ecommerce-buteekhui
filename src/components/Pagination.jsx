@@ -60,7 +60,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-4">
+    <div className="flex flex-wrap items-center justify-center mt-4">
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
