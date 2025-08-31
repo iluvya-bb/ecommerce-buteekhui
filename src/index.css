@@ -1,1 +1,14 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  background-color: #ecf0f1;
+}
+
+.neumorphic-outer {
+  box-shadow: 9px 9px 16px #b8b9be, -9px -9px 16px #ffffff;
+}
+
+.neumorphic-inner {
+  box-shadow: inset 9px 9px 16px #b8b9be, inset -9px -9px 16px #ffffff;
+}

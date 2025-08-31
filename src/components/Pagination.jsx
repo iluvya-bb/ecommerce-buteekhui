@@ -1,12 +1,17 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 const PageButton = ({ page, currentPage, onPageChange, children }) => (
-	<button
+	<motion.button
 		onClick={() => onPageChange(page)}
-		className={`px-3 py-1 mx-1 rounded-md ${
-			currentPage === page ? "bg-indigo-600 text-white" : "bg-gray-200"
+		className={`px-4 py-2 mx-1 rounded-md transition-colors ${
+			currentPage === page ? "bg-accent text-white" : "bg-white text-text-light hover:bg-secondary"
 		}`}
+		whileHover={{ y: -2 }}
 	>
 		{children || page}
-	</button>
+	</motion.button>
 );
 
 const Ellipsis = () => <span className="px-3 py-1">...</span>;
@@ -65,22 +70,24 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 	};
 
 	return (
-		<div className="flex flex-wrap items-center justify-center mt-4">
-			<button
+		<div className="flex items-center justify-center mt-12">
+			<motion.button
 				onClick={handlePrevious}
 				disabled={currentPage === 1}
-				className="px-4 py-2 mr-2 text-sm font-medium text-gray-700 bg-white border rounded-md hover:bg-gray-50 disabled:opacity-50"
+				className="px-3 py-2 mr-2 text-text-light bg-white rounded-md hover:bg-secondary disabled:opacity-50"
+				whileHover={{ scale: 1.05 }}
 			>
-				&lt;
-			</button>
+				<ChevronLeft size={20} />
+			</motion.button>
 			{renderPageNumbers()}
-			<button
+			<motion.button
 				onClick={handleNext}
 				disabled={currentPage === totalPages}
-				className="px-4 py-2 ml-2 text-sm font-medium text-gray-700 bg-white border rounded-md hover:bg-gray-50 disabled:opacity-50"
+				className="px-3 py-2 ml-2 text-text-light bg-white rounded-md hover:bg-secondary disabled:opacity-50"
+				whileHover={{ scale: 1.05 }}
 			>
-				&gt;
-			</button>
+				<ChevronRight size={20} />
+			</motion.button>
 		</div>
 	);
 };

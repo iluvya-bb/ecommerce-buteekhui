@@ -60,6 +60,7 @@ const API = {
 			"Content-Type": "multipart/form-data",
 		},
 	}),
+	createContact: (data) => axiosInstance.post("/contacts", data),
 };
 
 export default API;

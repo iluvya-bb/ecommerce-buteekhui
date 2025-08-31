@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
 import { CartContext } from "../context/CartContext";
 
-const ProductCard = ({ product }) => {
+const NonNeuroProductCard = ({ product }) => {
 	const { addToCart } = useContext(CartContext);
 	const imageUrl = product.featuredImage
 		? `${import.meta.env.VITE_API_URL}/${product.featuredImage}`
@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
 
 	return (
 		<motion.div
-			className="bg-white rounded-2xl overflow-hidden h-full flex flex-col neumorphic-outer"
+			className="bg-white rounded-2xl overflow-hidden h-full flex flex-col"
 			whileHover={{
 				y: -8,
 			}}
@@ -64,4 +64,4 @@ const ProductCard = ({ product }) => {
 	);
 };
 
-export default ProductCard;
+export default NonNeuroProductCard;

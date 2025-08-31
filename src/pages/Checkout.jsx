@@ -75,125 +75,133 @@ const Checkout = () => {
   }
 
   return (
-    <div className="container mx-auto py-12">
-      <h1 className="text-4xl font-bold text-center mb-8">Тооцоо хийх</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Contact Form */}
-        <div>
-          <h2 className="text-2xl font-semibold mb-6">Холбоо барих мэдээлэл</h2>
-          <form id="checkout-form" onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">Нэр</label>
-              <input type="text" name="name" id="name" value={contact.name} onChange={handleContactChange} required className="w-full px-3 py-2 mt-1 border rounded-md"/>
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">И-мэйл</label>
-              <input type="email" name="email" id="email" value={contact.email} onChange={handleContactChange} required disabled={!!user} className="w-full px-3 py-2 mt-1 border rounded-md bg-gray-100 disabled:cursor-not-allowed"/>
-            </div>
-            <div>
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700">Хүргэлтийн хаяг</label>
-              <textarea name="address" id="address" value={contact.address} onChange={handleContactChange} required className="w-full px-3 py-2 mt-1 border rounded-md"/>
-            </div>
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Утасны дугаар</label>
-              <input type="text" name="phone" id="phone" value={contact.phone} onChange={handleContactChange} required className="w-full px-3 py-2 mt-1 border rounded-md"/>
-            </div>
-          </form>
-          <div className="mt-8">
-            <h2 className="text-2xl font-semibold mb-4">Төлбөрийн хэрэгслүүд</h2>
-            <div className="flex border-b">
-              <button 
-                onClick={() => setPaymentMethod('bank')}
-                className={`py-2 px-4 text-sm font-medium transition-colors ${paymentMethod === 'bank' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-gray-500 hover:text-indigo-600'}`}
-              >
-                Дансаар шилжүүлэх
-              </button>
-              <button 
-                onClick={() => setPaymentMethod('qpay')}
-                disabled={settings.qpay !== 'true'}
-                className={`py-2 px-4 text-sm font-medium transition-colors ${paymentMethod === 'qpay' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-gray-500 hover:text-indigo-600'} disabled:text-gray-300 disabled:cursor-not-allowed`}
-              >
-                QPay
-              </button>
-            </div>
-            <div className="p-6 bg-gray-50 rounded-b-lg">
-              {paymentMethod === 'bank' && (
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm text-gray-500">Банк:</p>
-                    <p className="text-lg font-semibold text-gray-800">{settings.bankName}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Дансны нэр:</p>
-                    <p className="text-lg font-semibold text-gray-800">{settings.bankAccountName}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Дансны дугаар:</p>
-                    <div className="flex items-center justify-between">
-                      <p className="text-lg font-semibold text-gray-800 tracking-wider">{settings.bankAccount}</p>
-                      <button onClick={() => handleCopy(settings.bankAccount)} className="ml-4 px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        {copied === settings.bankAccount ? 'Хуулсан!' : 'Хуулах'}
-                      </button>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Төлөх дүн:</p>
-                    <div className="flex items-center justify-between">
-                      <p className="text-lg font-bold text-indigo-600">₮{total.toFixed(2)}</p>
-                      <button onClick={() => handleCopy(total.toFixed(2))} className="ml-4 px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        {copied === total.toFixed(2) ? 'Хуулсан!' : 'Хуулах'}
-                      </button>
-                    </div>
-                  </div>
-                  <p className="text-sm text-center text-gray-600 pt-4 border-t mt-4">Та төлбөрөө төлснөөр таны захиалга баталгаажина</p>
-                </div>
-              )}
-              {paymentMethod === 'qpay' && (
+    <div className="bg-secondary py-12">
+      <div className="container mx-auto">
+        <h1 className="text-3xl font-bold text-center mb-8 text-primary">Тооцоо хийх</h1>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          
+          {/* Left Column: Form and Payment */}
+          <div className="space-y-8">
+            {/* Contact Form */}
+            <div className="p-8 rounded-2xl neumorphic-outer bg-secondary">
+              <h2 className="text-2xl font-semibold mb-6 text-primary">Холбоо барих мэдээлэл</h2>
+              <form id="checkout-form" onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <p>QPay-р төлбөр төлөх хэсэг.</p>
+                  <label htmlFor="name" className="block text-sm font-medium text-text mb-1">Нэр</label>
+                  <input type="text" name="name" id="name" value={contact.name} onChange={handleContactChange} required className="w-full px-3 py-2 mt-1 rounded-lg bg-secondary neumorphic-inner"/>
                 </div>
-              )}
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-text mb-1">И-мэйл</label>
+                  <input type="email" name="email" id="email" value={contact.email} onChange={handleContactChange} required disabled={!!user} className="w-full px-3 py-2 mt-1 rounded-lg bg-secondary neumorphic-inner disabled:cursor-not-allowed"/>
+                </div>
+                <div>
+                  <label htmlFor="address" className="block text-sm font-medium text-text mb-1">Хүргэлтийн хаяг</label>
+                  <textarea name="address" id="address" value={contact.address} onChange={handleContactChange} required rows="3" className="w-full px-3 py-2 mt-1 rounded-lg bg-secondary neumorphic-inner"/>
+                </div>
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-text mb-1">Утасны дугаар</label>
+                  <input type="text" name="phone" id="phone" value={contact.phone} onChange={handleContactChange} required className="w-full px-3 py-2 mt-1 rounded-lg bg-secondary neumorphic-inner"/>
+                </div>
+              </form>
             </div>
-          </div>
-        </div>
 
-        {/* Order Summary */}
-        <div className="p-8 bg-gray-100 rounded-lg">
-          <h2 className="text-2xl font-semibold mb-6">Таны захиалга</h2>
-          <div className="space-y-4">
-            {cartItems.map(item => (
-              <div key={item.id} className="flex justify-between items-center">
-                <div>
-                  <p className="font-semibold">{item.name}</p>
-                  <p className="text-sm text-gray-600">Тоо ширхэг: {item.quantity}</p>
-                </div>
-                <p>₮{(item.price * item.quantity).toFixed(2)}</p>
+            {/* Payment Methods */}
+            <div className="p-8 rounded-2xl neumorphic-outer bg-secondary">
+              <h2 className="text-2xl font-semibold mb-4">Төлбөрийн хэрэгслүүд</h2>
+              <div className="flex gap-4 mb-4">
+                <button 
+                  onClick={() => setPaymentMethod('bank')}
+                  className={`py-2 px-4 rounded-lg transition-all duration-300 ${paymentMethod === 'bank' ? 'neumorphic-inner text-accent' : 'neumorphic-outer active:neumorphic-inner'}`}
+                >
+                  Дансаар шилжүүлэх
+                </button>
+                <button 
+                  onClick={() => setPaymentMethod('qpay')}
+                  disabled={settings.qpay !== 'true'}
+                  className={`py-2 px-4 rounded-lg transition-all duration-300 ${paymentMethod === 'qpay' ? 'neumorphic-inner text-accent' : 'neumorphic-outer active:neumorphic-inner'} disabled:opacity-50 disabled:cursor-not-allowed`}
+                >
+                  QPay
+                </button>
               </div>
-            ))}
-          </div>
-          <div className="py-4 mt-4 border-t border-b">
-            <div className="flex justify-between">
-              <p>Дүн</p>
-              <p>₮{subtotal.toFixed(2)}</p>
+              <div className="p-6 rounded-lg neumorphic-inner bg-secondary">
+                {paymentMethod === 'bank' && (
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-sm text-text-light">Банк:</p>
+                      <p className="text-lg font-semibold text-primary">{settings.bankName}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-text-light">Дансны нэр:</p>
+                      <p className="text-lg font-semibold text-primary">{settings.bankAccountName}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-text-light">Дансны дугаар:</p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-lg font-semibold text-primary tracking-wider">{settings.bankAccount}</p>
+                        <button onClick={() => handleCopy(settings.bankAccount)} className="ml-4 px-3 py-1 text-xs font-medium rounded-md neumorphic-outer active:neumorphic-inner">
+                          {copied === settings.bankAccount ? 'Хуулсан!' : 'Хуулах'}
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-sm text-text-light">Төлөх дүн:</p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-lg font-bold text-accent">₮{total.toLocaleString()}</p>
+                        <button onClick={() => handleCopy(total.toFixed(2))} className="ml-4 px-3 py-1 text-xs font-medium rounded-md neumorphic-outer active:neumorphic-inner">
+                          {copied === total.toFixed(2) ? 'Хуулсан!' : 'Хуулах'}
+                        </button>
+                      </div>
+                    </div>
+                    <p className="text-sm text-center text-text-light pt-4 border-t border-gray-300/50 mt-4">Та төлбөрөө төлснөөр таны захиалга баталгаажина</p>
+                  </div>
+                )}
+                {paymentMethod === 'qpay' && (
+                  <div>
+                    <p>QPay-р төлбөр төлөх хэсэг.</p>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="flex justify-between mt-2">
-              <p>НӨАТ (10%)</p>
-              <p>₮{vat.toFixed(2)}</p>
+          </div>
+
+          {/* Right Column: Order Summary */}
+          <div className="p-8 rounded-2xl neumorphic-outer bg-secondary h-fit">
+            <h2 className="text-2xl font-semibold mb-6 text-primary">Таны захиалга</h2>
+            <div className="space-y-4">
+              {cartItems.map(item => (
+                <div key={item.id} className="flex justify-between items-center text-sm">
+                  <div>
+                    <p className="font-semibold text-primary">{item.name}</p>
+                    <p className="text-text-light">Тоо ширхэг: {item.quantity}</p>
+                  </div>
+                  <p className="text-text">₮{(item.price * item.quantity).toLocaleString()}</p>
+                </div>
+              ))}
             </div>
+            <div className="py-4 mt-4 border-t border-b border-gray-300/50">
+              <div className="flex justify-between text-sm">
+                <p className="text-text-light">Дүн</p>
+                <p className="text-text">₮{subtotal.toLocaleString()}</p>
+              </div>
+              <div className="flex justify-between mt-2 text-sm">
+                <p className="text-text-light">НӨАТ (10%)</p>
+                <p className="text-text">₮{vat.toLocaleString()}</p>
+              </div>
+            </div>
+            <div className="flex justify-between mt-4 text-lg font-bold">
+              <p className="text-primary">Нийт</p>
+              <p className="text-accent">₮{total.toLocaleString()}</p>
+            </div>
+            {error && <p className="text-sm text-red-600 mt-4">{error}</p>}
+            <button 
+              type="submit" 
+              form="checkout-form" 
+              disabled={loading}
+              className="w-full px-4 py-3 mt-6 font-bold text-primary-dark bg-accent rounded-lg neumorphic-outer active:neumorphic-inner disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Түр хүлээнэ үү...' : 'Захиалга баталгаажуулах'}
+            </button>
           </div>
-          <div className="flex justify-between mt-4 text-xl font-bold">
-            <p>Нийт</p>
-            <p>₮{total.toFixed(2)}</p>
-          </div>
-          {error && <p className="text-sm text-red-600 mt-4">{error}</p>}
-          <button 
-            type="submit" 
-            form="checkout-form" 
-            disabled={loading}
-            className="w-full px-4 py-3 mt-6 font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 disabled:bg-gray-400"
-          >
-            {loading ? 'Түр хүлээнэ үү...' : 'Захиалга баталгаажуулах'}
-          </button>
         </div>
       </div>
     </div>

@@ -1,24 +1,18 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Armchair,
-  Book,
-  School,
   Search,
   ShoppingCart,
   User,
   Menu,
   X,
-  ShieldCheck,
-  Sparkles,
-  HeartHandshake,
 } from "lucide-react";
 import { CartProvider, CartContext } from "./context/CartContext";
 import CartDrawer from "./components/CartDrawer";
 import { AuthContext } from "./context/AuthContext";
 import { SettingsContext } from "./context/SettingsContext";
-import API from "./services/api";
 
 export default function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,16 +37,18 @@ export default function Layout() {
     }
   };
 
+  const { itemAdded } = useContext(CartContext);
+
   return (
     <CartProvider>
-      <div className="bg-white min-h-screen font-sans text-gray-800 w-screen overflow-x-hidden flex flex-col">
+      <div className="bg-secondary min-h-screen font-sans text-text w-screen flex flex-col">
         {/* Header & Navigation */}
-        <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <header className="bg-secondary/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
           <div className="max-w-[1800px] mx-auto px-6">
             <div className="flex justify-between items-center py-4">
               <motion.a
                 href="/"
-                className="flex items-center space-x-2 text-2xl font-bold text-orange-600"
+                className="flex items-center space-x-2 text-2xl font-bold text-primary"
                 whileHover={{ scale: 1.05 }}
               >
                 {logo ? (
@@ -68,7 +64,7 @@ export default function Layout() {
                   <motion.div key={link.to} whileHover={{ y: -2 }}>
                     <Link
                       to={link.to}
-                      className="text-gray-600 hover:text-orange-600 transition-colors duration-300"
+                      className="text-text hover:text-accent transition-colors duration-300"
                     >
                       {link.text}
                     </Link>
@@ -83,35 +79,36 @@ export default function Layout() {
                     placeholder="Хайх..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-48 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    className="w-48 px-4 py-2 border border-gray-300 rounded-lg bg-secondary text-text focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                   <button
                     type="submit"
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-orange-600"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-text-light hover:text-accent"
                   >
                     <Search size={22} />
                   </button>
                 </form>
                 <Link
                   to={user ? "/profile" : "/login"}
-                  className="text-gray-500 hover:text-orange-600"
+                  className="p-3 rounded-full neumorphic-outer active:neumorphic-inner transition-all"
                 >
-                  <User size={22} />
+                  <User size={22} className="text-text-light hover:text-accent"/>
                 </Link>
-                <button
+                <motion.button
                   onClick={() => setIsCartOpen(true)}
-                  className="relative text-gray-500 hover:text-orange-600"
+                  className="relative p-3 rounded-full neumorphic-outer active:neumorphic-inner transition-all"
                 >
-                  <ShoppingCart size={22} />
+                  <ShoppingCart size={22} className="text-text-light hover:text-accent"/>
                   <CartItemsCount />
-                </button>
+                </motion.button>
                 <div className="lg:hidden">
                   <motion.button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     aria-label="Toggle menu"
                     whileTap={{ scale: 0.9 }}
+                    className="p-3 rounded-full neumorphic-outer active:neumorphic-inner transition-all"
                   >
-                    <Menu size={24} />
+                    {isMenuOpen ? <X size={24} className="text-text"/> : <Menu size={24} className="text-text"/>}
                   </motion.button>
                 </div>
               </div>
@@ -124,7 +121,7 @@ export default function Layout() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="lg:hidden bg-white border-t border-gray-200"
+                className="lg:hidden bg-white/80 backdrop-blur-md"
               >
                 <div className="p-4">
                   {navLinks.map((link) => (
@@ -132,7 +129,7 @@ export default function Layout() {
                       key={link.to}
                       to={link.to}
                       onClick={() => setIsMenuOpen(false)}
-                      className="block text-center py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors duration-300"
+                      className="block text-center py-2 px-4 text-text-light hover:bg-secondary rounded-lg transition-colors duration-300"
                     >
                       {link.text}
                     </Link>
@@ -148,22 +145,22 @@ export default function Layout() {
         </main>
 
         {/* Footer */}
-        <footer className="bg-gray-800 text-white">
+        <footer className="bg-secondary text-text">
           <div className="max-w-[1800px] mx-auto px-6 py-12">
             <div className="grid md:grid-cols-4 gap-8">
               <div>
-                <h3 className="text-lg font-bold mb-4">Buteekhui.com</h3>
-                <p className="text-gray-400">
+                <h3 className="text-lg font-bold mb-4 text-primary">Buteekhui.com</h3>
+                <p className="text-text-light">
                   Сургалтын орчныг чанартай, загварлаг тавилгаар тохижуулна.
                 </p>
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-4">Нэмэлт холбоос</h3>
+                <h3 className="text-lg font-bold mb-4 text-primary">Нэмэлт холбоос</h3>
                 <ul className="space-y-2">
                   <li>
                     <Link
                       to="/about"
-                      className="text-gray-400 hover:text-white"
+                      className="text-text-light hover:text-accent"
                     >
                       Бидний тухай
                     </Link>
@@ -171,7 +168,7 @@ export default function Layout() {
                   <li>
                     <Link
                       to="/privacy"
-                      className="text-gray-400 hover:text-white"
+                      className="text-text-light hover:text-accent"
                     >
                       Нууцлалын бодлого
                     </Link>
@@ -179,7 +176,7 @@ export default function Layout() {
                   <li>
                     <Link
                       to="/terms"
-                      className="text-gray-400 hover:text-white"
+                      className="text-text-light hover:text-accent"
                     >
                       Үйлчилгээний нөхцөл
                     </Link>
@@ -187,12 +184,12 @@ export default function Layout() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-4">Ангилал</h3>
+                <h3 className="text-lg font-bold mb-4 text-primary">Ангилал</h3>
                 <ul className="space-y-2">
                   <li>
                     <Link
                       to="/categories/desks"
-                      className="text-gray-400 hover:text-white"
+                      className="text-text-light hover:text-accent"
                     >
                       Ширээ, сандал
                     </Link>
@@ -200,7 +197,7 @@ export default function Layout() {
                   <li>
                     <Link
                       to="/categories/library"
-                      className="text-gray-400 hover:text-white"
+                      className="text-text-light hover:text-accent"
                     >
                       Номын сан
                     </Link>
@@ -208,7 +205,7 @@ export default function Layout() {
                   <li>
                     <Link
                       to="/categories/classroom"
-                      className="text-gray-400 hover:text-white"
+                      className="text-text-light hover:text-accent"
                     >
                       Анги танхим
                     </Link>
@@ -216,14 +213,14 @@ export default function Layout() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-4">Холбоо барих</h3>
-                <ul className="space-y-2 text-gray-400">
+                <h3 className="text-lg font-bold mb-4 text-primary">Холбоо барих</h3>
+                <ul className="space-y-2 text-text-light">
                   <li>Имэйл: {settings.contactEmail}</li>
                   <li>Утас: {settings.contactPhoneNumber}</li>
                 </ul>
               </div>
             </div>
-            <div className="mt-12 border-t border-gray-700 pt-8 text-center text-gray-500">
+            <div className="mt-12 border-t border-gray-300 pt-8 text-center text-text-light">
               <p>
                 &copy; {new Date().getFullYear()} Buteekhui.com. Бүх эрх хуулиар
                 хамгаалагдсан.
@@ -238,12 +235,16 @@ export default function Layout() {
 }
 
 const CartItemsCount = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, itemAdded } = useContext(CartContext);
   const count = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return count > 0 ? (
-    <span className="absolute -top-2 -right-2 min-w-[20px] h-5 px-1 bg-red-500 text-white text-xs rounded-md flex items-center justify-center">
+    <motion.span 
+      className="absolute -top-2 -right-2 min-w-[20px] h-5 px-1 bg-red-500 text-white text-xs rounded-full flex items-center justify-center z-10"
+      animate={{ scale: itemAdded ? 1.5 : 1 }}
+      transition={{ type: 'spring', stiffness: 500, damping: 10 }}
+    >
       {count}
-    </span>
+    </motion.span>
   ) : null;
 };
