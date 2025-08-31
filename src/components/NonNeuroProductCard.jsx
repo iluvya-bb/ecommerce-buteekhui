@@ -34,7 +34,7 @@ const NonNeuroProductCard = ({ product }) => {
 					<img
 						src={imageUrl}
 						alt={product.name}
-						className="w-full h-48 object-fit"
+						className="w-full h-48 object-contain"
 					/>
 					<div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
 				</div>
